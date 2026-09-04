@@ -1,0 +1,223 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Design system
+   Every dimension derives from one unit so the whole page is a
+   single fixed-ratio composition that scales to the viewport,
+   the way the reference layout does.
+   ============================================================ */
+:root {
+  --unit: calc(100vh / 1080);
+
+  --grid-gap: calc(16 * var(--unit));
+  --card-radius: calc(27 * var(--unit));
+  --border-width: calc(2.5 * var(--unit));
+
+  --pad-xs: calc(12 * var(--unit));
+  --pad-sm: calc(16 * var(--unit));
+  --pad-md: calc(20 * var(--unit));
+  --pad-lg: calc(24 * var(--unit));
+
+  --fs-xs: calc(12 * var(--unit));
+  --fs-sm: calc(14 * var(--unit));
+  --fs-base: calc(16 * var(--unit));
+  --fs-lg: calc(18 * var(--unit));
+  --fs-xl: calc(24 * var(--unit));
+  --fs-sub: calc(27 * var(--unit));
+  --fs-2xl: calc(32 * var(--unit));
+  --fs-title: calc(36 * var(--unit));
+  --fs-3xl: calc(48 * var(--unit));
+
+  --tech-icon-size: calc(56 * var(--unit));
+  --tech-icon-gap: calc(10 * var(--unit));
+  --tech-icon-inner: calc(30 * var(--unit));
+  --tech-icon-radius: calc(11 * var(--unit));
+  --tech-fade-height: calc(80 * var(--unit));
+  --tech-icon-shadow: 0 3px 8px #001b6614, 0 1px 3px #001b660a;
+
+  --bg-color: #d7dae2;
+  --fg-color: #171717;
+  --primary-color: #474054;
+  --primary-hover-color: #5d546d;
+  --muted-gray: #8b8a93;
+  --card-bg: #f7f7f7;
+  --resume-bg: #e2e6eb;
+  --hero-marquee-color: #e2e5e9;
+  --card-shadow: 0 4px 16px 0 #0019b90d;
+  --border-overlay: linear-gradient(to bottom, #fffc 0%, #000000b9 100%);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@layer base {
+  html,
+  body {
+    height: 100%;
+    background: var(--bg-color);
+    color: var(--fg-color);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+    font-weight: 400;
+    overflow: hidden;
+  }
+
+  ::selection {
+    background: var(--primary-color);
+    color: #fff;
+  }
+}
+
+/* ============================================================
+   Viewport + bento grid
+   ============================================================ */
+.bento-viewport {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  padding: var(--grid-gap);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-color);
+}
+
+.bento-grid {
+  --grid-w: 1790;
+  --grid-h: 1001;
+  display: grid;
+  grid-template-columns: minmax(0, 298fr) minmax(0, 298fr) minmax(0, 534fr) minmax(0, 612fr);
+  gap: var(--grid-gap);
+  height: min(
+    calc(100vh - 2 * var(--grid-gap)),
+    calc((100vw - 2 * var(--grid-gap)) * var(--grid-h) / var(--grid-w))
+  );
+  width: min(
+    calc(100vw - 2 * var(--grid-gap)),
+    calc((100vh - 2 * var(--grid-gap)) * var(--grid-w) / var(--grid-h))
+  );
+  opacity: 0;
+  transform: scale(0.985);
+  transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+}
+
+.bento-grid[data-ready="true"] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.bento-col {
+  display: grid;
+  gap: var(--grid-gap);
+  height: 100%;
+  min-height: 0;
+}
+
+.bento-col-1,
+.bento-col-2 { grid-template-rows: minmax(0, 273fr) minmax(0, 457fr) minmax(0, 239fr); }
+.bento-col-2-inner { grid-template-rows: minmax(0, 268fr) minmax(0, 189fr); overflow: hidden; }
+.bento-col-3 { grid-template-rows: minmax(0, 188fr) minmax(0, 714fr) minmax(0, 69fr); }
+.bento-col-4 { grid-template-columns: minmax(0, 298fr) minmax(0, 298fr); grid-template-rows: minmax(0, 666fr) minmax(0, 325fr); }
+.bento-col-4-top {
+  grid-column: 1 / 3;
+  display: grid;
+  grid-template-columns: minmax(0, 298fr) minmax(0, 298fr);
+  grid-template-rows: minmax(0, 136fr) minmax(0, 223fr) minmax(0, 285fr);
+  gap: var(--grid-gap);
+  min-width: 0;
+  min-height: 0;
+}
+
+.bento-col { min-width: 0; }
+.cell { position: relative; height: 100%; width: 100%; min-height: 0; min-width: 0; }
+.cell-trophy { grid-column: 1; grid-row: 1 / 3; }
+.cell-ai { grid-column: 1; grid-row: 3; }
+.cell-music { grid-column: 2; grid-row: 1; }
+.cell-education { grid-column: 2; grid-row: 2; }
+.cell-github { grid-column: 2; grid-row: 3; }
+.cell-projects { grid-column: 1 / 3; }
+
+/* Staggered card entrance once the loader clears */
+.bento-grid[data-ready="true"] .card {
+  animation: cardIn 0.75s var(--ease-out-expo) backwards;
+  animation-delay: calc(var(--card-i, 0) * 45ms);
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(calc(14 * var(--unit))) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ============================================================
+   Card shell
+   ============================================================ */
+.card {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  padding: calc(24 * var(--unit));
+  box-sizing: border-box;
+}
+
+/* Gradient hairline border drawn as a masked ring */
+.card[data-variant="white"],
+.card[data-variant="image"] { background: var(--card-bg); }
+
+.card[data-variant]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  border: var(--border-width) solid transparent;
+  border-radius: var(--card-radius);
+  background: linear-gradient(#fff, #e6e6ed) border-box;
+  -webkit-mask-image: linear-gradient(#fff 0 0), linear-gradient(#fff 0 0);
+  mask-image: linear-gradient(#fff 0 0), linear-gradient(#fff 0 0);
+  -webkit-mask-clip: padding-box, border-box;
+  mask-clip: padding-box, border-box;
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.card[data-variant="image"]::after { background: var(--border-overlay) border-box; mix-blend-mode: overlay; }
+.card[data-variant="hero"] { background: none; box-shadow: none; border: none; padding: 0; overflow: visible; z-index: 50; }
+.card[data-variant="hero"]::after { content: none; }
+
+.card-link { display: block; color: inherit; text-decoration: none; outline: none; cursor: pointer; }
+
+/* Hover arrow */
+.card-arrow {
+  position: absolute;
+  right: calc(20 * var(--unit));
+  bottom: calc(20 * var(--unit));
+  z-index: 50;
+  width: calc(36 * var(--unit));
+  height: calc(36 * var(--unit));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #262626d9;
+  background: #ffffffb3;
+  border: 1px solid #26262633;
+  backdrop-filter: blur(16px);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.3s var(--ease-out-quint), transform 0.3s var(--ease-out-quint);
+}
+
+.card:hover .card-arrow { opacity: 1; transform: scale(1); }
+.card:active .card-arrow { transform: scale(0.85); transition: transform 80ms ease-out; }
+
+.card-title { font-size: var(--fs-sub); font-weight: 500; line-height: 1; }
+.card-sub { font-size: var(--fs-base); color: var(--muted-gray); font-weight: 300; line-height: 1; }
