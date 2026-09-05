@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import Card from "./Card";
 import { profile } from "@/lib/profile";
 
@@ -48,7 +49,14 @@ export default function LeetCodeCard({ index }: { index?: number }) {
 
       <div className="lc-state lc-logo-state">
         <span className="lc-logo-inner">
-          <img className="lc-logo-icon" src="/icons/leetcode.svg" alt="" loading="lazy" />
+          <Image
+            className="lc-logo-icon"
+            src="/icons/leetcode.svg"
+            alt=""
+            width={36}
+            height={36}
+            unoptimized
+          />
           <span>
             <span className="card-title" style={{ display: "block" }}>
               leetcode

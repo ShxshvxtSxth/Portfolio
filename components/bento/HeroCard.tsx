@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useRef, useState } from "react";
+import Image from "next/image";
 import Card from "./Card";
 import { profile } from "@/lib/profile";
 
@@ -46,7 +47,13 @@ export default function HeroCard({ index }: { index?: number }) {
         </div>
 
         <div className="hero-image-wrap">
-          <img src={profile.avatar} alt={`${profile.name} portrait`} />
+          <Image
+            src={profile.avatar}
+            alt={`${profile.name} portrait`}
+            width={600}
+            height={600}
+            priority
+          />
         </div>
       </Card>
     </div>

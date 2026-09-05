@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import Card from "./Card";
 import { profile, type ProjectItem } from "@/lib/profile";
 
@@ -6,7 +7,13 @@ function Tile({ project }: { project: ProjectItem }) {
   return (
     <span className="project-tile" style={project.image ? undefined : { background: project.gradient }}>
       {project.image ? (
-        <img src={project.image} alt={project.title} loading="lazy" />
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          sizes="190px"
+          className="object-cover"
+        />
       ) : (
         <span className="project-tile-fallback">{project.title}</span>
       )}

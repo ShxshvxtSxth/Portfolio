@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { Play, Pause } from "lucide-react";
 import Card from "./Card";
 import { profile } from "@/lib/profile";
@@ -120,9 +121,11 @@ export default function MusicCard({ index }: { index?: number }) {
           aria-hidden
         />
         <span className="music-album-cover" aria-hidden>
-          <img
+          <Image
             src={profile.nowPlaying.cover}
             alt={`${profile.nowPlaying.track} album art`}
+            fill
+            sizes="120px"
             className="w-full h-full object-cover rounded-[inherit]"
           />
         </span>

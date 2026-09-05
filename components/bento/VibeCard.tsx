@@ -2,6 +2,7 @@
 
 import React from "react";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import Card from "./Card";
 import { profile } from "@/lib/profile";
 
@@ -21,7 +22,7 @@ export default function VibeCard({ index }: { index?: number }) {
   return (
     <Card card="vibe" variant="image" index={index} arrow={false}>
       {image ? (
-        <img className="vibe-media" src={image} alt={title} />
+        <Image className="vibe-media" src={image} alt={title} fill unoptimized />
       ) : (
         <span className="vibe-media" style={{ background: "#0c0d10" }}>
           <ThreeScene />

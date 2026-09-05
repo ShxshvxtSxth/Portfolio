@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import Card from "./Card";
 import { profile, type TechItem } from "@/lib/profile";
 import TechProficiencyDialog from "./TechProficiencyDialog";
@@ -26,10 +27,12 @@ function TechIconItem({ item }: { item: TechItem }) {
     <span className="tech-icon-wrap" title={item.name}>
       <span className="tech-icon">
         {!imgFailed ? (
-          <img
+          <Image
             src={iconUrl(item)}
             alt={item.name}
-            loading="lazy"
+            width={30}
+            height={30}
+            unoptimized
             onError={() => setImgFailed(true)}
           />
         ) : (

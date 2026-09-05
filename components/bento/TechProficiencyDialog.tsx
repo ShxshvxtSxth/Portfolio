@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { X, Search, Layers, Sparkles, Terminal, Database, Code2, ShieldCheck, Cpu, Cloud } from "lucide-react";
@@ -33,11 +34,13 @@ function TechBadge({ item }: { item: TechItem }) {
     >
       <div className="w-7 h-7 rounded-lg bg-white border border-zinc-200/60 shadow-xs flex items-center justify-center p-1 shrink-0 group-hover:scale-105 transition-transform">
         {!imgFailed ? (
-          <img
+          <Image
             src={`/icons/${item.slug}.svg`}
             alt={item.name}
+            width={24}
+            height={24}
             className="w-full h-full object-contain"
-            loading="lazy"
+            unoptimized
             onError={() => setImgFailed(true)}
           />
         ) : (
