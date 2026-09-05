@@ -206,7 +206,7 @@ ${resume.achievements.map((a) => `• ${a.title}: ${a.description}`).join("\n")}
                     className="flex items-center gap-1 hover:underline"
                   >
                     <Linkedin className="w-3.5 h-3.5 text-indigo-600" />
-                    linkedin.com/in/shashvat-seth
+                    linkedin.com/in/shashvat-seth-516472364
                   </a>
                   <span>•</span>
                   <a

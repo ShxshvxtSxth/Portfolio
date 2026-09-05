@@ -1,51 +1,87 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
+import { Linkedin } from "lucide-react";
 import Card from "./Card";
 import { profile } from "@/lib/profile";
-import { Sparkles, Terminal } from "lucide-react";
+
+const COLS = 20;
+const ROWS = 18;
 
 /**
- * Enhanced Software Developer Role Card:
- * Highlights active engineering position at Vigorus.AI with live radar pulse,
- * chromatic company typography, and key tech stack indicators.
+ * LinkedIn profile card mirroring the GitHub card:
+ * Interactive network ripple grid in the background;
+ * Logo state displays the LinkedIn badge with handle;
+ * Hover state smoothly transitions to network connection stats.
  */
 export default function ClubCard({ index }: { index?: number }) {
+  // Deterministic-ish pattern so the ripple looks organic but stable per mount
+  const cells = useMemo(
+    () =>
+      Array.from({ length: COLS * ROWS }, (_, i) => ({
+        lit: (i * 7919) % 11 < 4,
+        delay: ((i * 37) % 60) / 10,
+      })),
+    []
+  );
+
+  const linkedinUrl =
+    profile.resume.linkedin ||
+    profile.socials.find((s) => s.id === "linkedin")?.href ||
+    "https://www.linkedin.com/in/shashvat-seth-516472364/";
+
   return (
-    <Card
-      card="club"
-      href={profile.currentRole.url}
-      index={index}
-      ariaLabel="Current role: Software Developer at Vigorus.AI"
-    >
-      <div className="club-content">
-        {/* Live Active Status Indicator */}
-        <div className="club-top-bar">
-          <div className="club-status-badge">
-            <span className="club-status-ping" />
-            <span className="club-status-dot" />
-            <span className="club-status-text">Active Role</span>
-          </div>
-          <span className="club-tech-tag">
-            <Terminal className="w-3 h-3" />
-            <span>Full-Stack</span>
-          </span>
-        </div>
+    <Card card="club" href={linkedinUrl} index={index} ariaLabel="LinkedIn profile">
+      <span className="li-grid" aria-hidden>
+        {cells.map((c, i) => (
+          <span
+            key={i}
+            className="li-cell"
+            data-lit={c.lit}
+            style={c.lit ? { animationDelay: `${c.delay}s` } : undefined}
+          />
+        ))}
+      </span>
 
-        {/* Role & Org */}
-        <div className="club-body">
-          <span className="club-prefix">Software Developer @</span>
-          <span className="club-name">{profile.currentRole.org}</span>
-        </div>
-
-        {/* Feature / Domain Highlight */}
-        <div className="club-footer">
-          <span className="club-highlight-pill">
-            <Sparkles className="w-3 h-3 text-amber-500 shrink-0" />
-            <span>Chikitsa EMR v2 · Agentic AI</span>
+      <span className="li-state li-logo-state">
+        <span style={{ display: "flex", alignItems: "center", gap: "calc(12 * var(--unit))" }}>
+          <Linkedin
+            style={{
+              width: "calc(40 * var(--unit))",
+              height: "calc(40 * var(--unit))",
+              color: "#0a66c2",
+            }}
+            strokeWidth={1.3}
+          />
+          <span>
+            <span className="card-title" style={{ display: "block" }}>
+              linkedin
+            </span>
+            <span className="card-sub" style={{ display: "block", marginTop: "calc(4 * var(--unit))" }}>
+              shashvat-seth
+            </span>
           </span>
-        </div>
-      </div>
+        </span>
+      </span>
+
+      <span className="li-state li-hover-state">
+        <span style={{ display: "flex", gap: "calc(28 * var(--unit))", textAlign: "center" }}>
+          <span>
+            <span className="li-stat-value" style={{ display: "block" }}>
+              500+
+            </span>
+            <span className="li-stat-label">connections</span>
+          </span>
+          <span>
+            <span className="li-stat-value" style={{ display: "block" }}>
+              connect
+            </span>
+            <span className="li-stat-label">on linkedin</span>
+          </span>
+        </span>
+      </span>
     </Card>
   );
 }
+
+export { ClubCard as LinkedInCard };

@@ -19,6 +19,13 @@ export const metadata: Metadata = {
   title: `${profile.name} — ${profile.role}`,
   description: `${profile.name}: Software Developer crafting scalable full-stack systems and shipping intelligent AI agents that solve critical real-life challenges.`,
   authors: [{ name: profile.name }],
+  icons: {
+    icon: [
+      { url: "/icon.png" },
+      { url: "/favicon.ico" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
   openGraph: {
     title: `${profile.name} — ${profile.role}`,
     description: `${profile.name}: Software Developer crafting scalable full-stack systems and shipping intelligent AI agents that solve critical real-life challenges.`,

@@ -164,7 +164,7 @@ export const profile: Profile = {
     location: "Pune, India",
     phone: "+91 9532914996",
     email: "sethshashvat18@gmail.com",
-    linkedin: "https://www.linkedin.com/in/shashvat-seth",
+    linkedin: "https://www.linkedin.com/in/shashvat-seth-516472364/",
     github: "https://github.com/ShxshvxtSxth",
     summary:
       "Software Developer with practical experience in full-stack web development, scalable frontend architectures, AI-assisted workflows, and modern software systems. Proven track record of delivering enterprise-grade healthcare platforms with Next.js 15, React 19, and LLM integrations, reducing manual data entry by 60% and API overhead by 40%.",
@@ -274,7 +274,7 @@ export const profile: Profile = {
   ],
 
   socials: [
-    { id: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/in/shashvat-seth" },
+    { id: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/in/shashvat-seth-516472364/" },
     { id: "github", label: "GitHub", href: "https://github.com/ShxshvxtSxth" },
     { id: "leetcode", label: "LeetCode", href: "https://leetcode.com/u/ShxshvxtSxth/" },
     { id: "mail", label: "Email", href: "mailto:sethshashvat18@gmail.com" },
