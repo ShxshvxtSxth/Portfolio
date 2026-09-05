@@ -17,11 +17,11 @@ const chakra = Chakra_Petch({
 
 export const metadata: Metadata = {
   title: `${profile.name} — ${profile.role}`,
-  description: `${profile.name}: ${profile.role} building full-stack products and AI systems.`,
+  description: `${profile.name}: Software Developer crafting scalable full-stack systems and shipping intelligent AI agents that solve critical real-life challenges.`,
   authors: [{ name: profile.name }],
   openGraph: {
     title: `${profile.name} — ${profile.role}`,
-    description: `${profile.name}: ${profile.role} building full-stack products and AI systems.`,
+    description: `${profile.name}: Software Developer crafting scalable full-stack systems and shipping intelligent AI agents that solve critical real-life challenges.`,
     type: "website",
   },
 };

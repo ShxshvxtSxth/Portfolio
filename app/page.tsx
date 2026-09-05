@@ -37,46 +37,46 @@ export default function Home() {
           {/* ---- column 1 ---- */}
           <section className="bento-col bento-col-1">
             <div className="cell cell-leetcode">
-              <LeetCodeCard index={0} />
+              <LeetCodeCard index={10} />
             </div>
             <div className="cell cell-techstack">
-              <TechStackCard index={3} />
+              <TechStackCard index={11} />
             </div>
             <div className="cell cell-vibe">
-              <VibeCard index={6} />
+              <VibeCard index={12} />
             </div>
           </section>
 
           {/* ---- column 2 ---- */}
           <section className="bento-col bento-col-2">
             <div className="cell cell-certificate">
-              <CertificateCard index={1} />
+              <CertificateCard index={13} />
             </div>
 
             <div className="bento-col bento-col-2-inner">
               <div className="cell cell-club">
-                <ClubCard index={4} />
+                <ClubCard index={14} />
               </div>
               <div className="cell cell-clock">
-                <ClockCard index={5} />
+                <ClockCard index={15} />
               </div>
             </div>
 
             <div className="cell cell-experience">
-              <ExperienceCard index={7} />
+              <ExperienceCard index={16} />
             </div>
           </section>
 
           {/* ---- column 3, centre ---- */}
           <section className="bento-col bento-col-3">
             <div className="cell cell-about">
-              <AboutCard index={2} />
+              <AboutCard index={1} />
             </div>
             <div className="cell cell-hero">
-              <HeroCard index={2} />
+              <HeroCard index={0} />
             </div>
             <div className="cell cell-dock">
-              <DockCard index={8} />
+              <DockCard index={17} />
             </div>
           </section>
 
@@ -84,24 +84,24 @@ export default function Home() {
           <section className="bento-col bento-col-4">
             <div className="bento-col-4-top">
               <div className="cell cell-trophy">
-                <TrophyCard index={3} />
+                <TrophyCard index={18} />
               </div>
               <div className="cell cell-music">
-                <MusicCard index={4} />
+                <MusicCard index={19} />
               </div>
               <div className="cell cell-education">
-                <EducationCard index={5} />
+                <EducationCard index={20} />
               </div>
               <div className="cell cell-ai">
-                <AICard index={6} />
+                <AICard index={21} />
               </div>
               <div className="cell cell-github">
-                <GithubCard index={7} />
+                <GithubCard index={22} />
               </div>
             </div>
 
             <div className="cell cell-projects">
-              <ProjectsCard index={8} />
+              <ProjectsCard index={23} />
             </div>
           </section>
         </div>

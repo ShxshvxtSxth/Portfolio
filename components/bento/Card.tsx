@@ -5,6 +5,7 @@ export interface CardProps {
   card: string;
   variant?: "white" | "image" | "hero";
   href?: string;
+  onClick?: () => void;
   /** stagger position for the entrance animation */
   index?: number;
   /** show the hover arrow affordance (links only, by default) */
@@ -32,13 +33,14 @@ export default function Card({
   card,
   variant = "white",
   href,
+  onClick,
   index = 0,
   arrow,
   ariaLabel,
   children,
 }: CardProps) {
   const style = { "--card-i": index } as React.CSSProperties;
-  const showArrow = arrow ?? Boolean(href);
+  const showArrow = arrow ?? Boolean(href || onClick);
 
   if (href) {
     const external = href.startsWith("http") || href.startsWith("mailto:");
@@ -52,10 +54,35 @@ export default function Card({
         aria-label={ariaLabel}
         target={external ? "_blank" : undefined}
         rel={external ? "noreferrer noopener" : undefined}
+        onClick={onClick}
       >
         {children}
         {showArrow && <Arrow />}
       </a>
+    );
+  }
+
+  if (onClick) {
+    return (
+      <div
+        className="card card-link cursor-pointer select-none"
+        data-card={card}
+        data-variant={variant}
+        style={style}
+        aria-label={ariaLabel}
+        onClick={onClick}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onClick();
+          }
+        }}
+      >
+        {children}
+        {showArrow && <Arrow />}
+      </div>
     );
   }
 

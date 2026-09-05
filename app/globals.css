@@ -72,6 +72,19 @@
     background: var(--primary-color);
     color: #fff;
   }
+
+  @media (max-width: 1024px) {
+    ::-webkit-scrollbar {
+      display: none !important;
+      width: 0px !important;
+      height: 0px !important;
+      background: transparent !important;
+    }
+    * {
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
+  }
 }
 
 /* ============================================================
@@ -103,13 +116,14 @@
     calc((100vh - 2 * var(--grid-gap)) * var(--grid-w) / var(--grid-h))
   );
   opacity: 0;
-  transform: scale(0.985);
-  transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+  transform: scale(0.97) translateY(calc(22 * var(--unit)));
+  transition: opacity 0.85s var(--ease-out-expo), transform 0.85s var(--ease-out-expo);
+  will-change: opacity, transform;
 }
 
 .bento-grid[data-ready="true"] {
   opacity: 1;
-  transform: scale(1);
+  transform: scale(1) translateY(0);
 }
 
 .bento-col {
@@ -145,12 +159,12 @@
 
 /* Staggered card entrance once the loader clears */
 .bento-grid[data-ready="true"] .card {
-  animation: cardIn 0.75s var(--ease-out-expo) backwards;
-  animation-delay: calc(var(--card-i, 0) * 45ms);
+  animation: cardIn 0.8s var(--ease-out-expo) backwards;
+  animation-delay: calc(var(--card-i, 0) * 45ms + 80ms);
 }
 
 @keyframes cardIn {
-  from { opacity: 0; transform: translateY(calc(14 * var(--unit))) scale(0.97); }
+  from { opacity: 0; transform: translateY(calc(24 * var(--unit))) scale(0.95); }
   to { opacity: 1; transform: none; }
 }
 

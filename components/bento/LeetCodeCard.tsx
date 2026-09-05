@@ -76,8 +76,8 @@ export default function LeetCodeCard({ index }: { index?: number }) {
                   stroke="#00000010"
                   strokeWidth="7"
                   strokeLinecap="round"
-                  strokeDasharray={`${SEGMENT} ${CIRC - SEGMENT}`}
-                  strokeDashoffset={s.start}
+                  strokeDasharray={`${SEGMENT.toFixed(2)} ${(CIRC - SEGMENT).toFixed(2)}`}
+                  strokeDashoffset={s.start.toFixed(2)}
                 />
                 <circle
                   cx="50"
@@ -87,8 +87,8 @@ export default function LeetCodeCard({ index }: { index?: number }) {
                   stroke={s.color}
                   strokeWidth="7"
                   strokeLinecap="round"
-                  strokeDasharray={`${SEGMENT * s.ratio} ${CIRC - SEGMENT * s.ratio}`}
-                  strokeDashoffset={s.start}
+                  strokeDasharray={`${(SEGMENT * s.ratio).toFixed(2)} ${(CIRC - SEGMENT * s.ratio).toFixed(2)}`}
+                  strokeDashoffset={s.start.toFixed(2)}
                 />
               </React.Fragment>
             ))}

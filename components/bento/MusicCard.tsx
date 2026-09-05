@@ -6,7 +6,7 @@ import Card from "./Card";
 import { profile } from "@/lib/profile";
 
 const BARS = 20;
-const IDLE = Array.from({ length: BARS }, (_, i) => 14 + Math.abs(Math.sin(i)) * 22);
+const IDLE = Array.from({ length: BARS }, (_, i) => Math.round(14 + Math.abs(Math.sin(i)) * 22));
 
 /**
  * Now-playing strip. The play button streams the local track and the waveform
@@ -110,9 +110,21 @@ export default function MusicCard({ index }: { index?: number }) {
         aria-label={`Open ${profile.nowPlaying.track} on Spotify`}
         title="Open on Spotify"
       >
-        <span className="music-album-blur" style={{ background: profile.nowPlaying.cover }} aria-hidden />
-        <span className="music-album-cover" style={{ background: profile.nowPlaying.cover }} aria-hidden>
-          🎧
+        <span
+          className="music-album-blur"
+          style={{
+            backgroundImage: `url(${profile.nowPlaying.cover})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+          aria-hidden
+        />
+        <span className="music-album-cover" aria-hidden>
+          <img
+            src={profile.nowPlaying.cover}
+            alt={`${profile.nowPlaying.track} album art`}
+            className="w-full h-full object-cover rounded-[inherit]"
+          />
         </span>
       </a>
 
@@ -128,12 +140,12 @@ export default function MusicCard({ index }: { index?: number }) {
 
         <span className="music-wave" aria-hidden>
           {levels.map((h, i) => (
-            <span key={i} className="music-bar" style={{ height: `${h}%` }} />
+            <span key={i} className="music-bar" style={{ height: `${Math.round(h)}%` }} />
           ))}
         </span>
 
         <span className="music-progress" aria-hidden>
-          <span className="music-progress-fill" style={{ width: `${progress * 100}%` }} />
+          <span className="music-progress-fill" style={{ width: `${Math.round(progress * 100)}%` }} />
         </span>
       </span>
 

@@ -18,6 +18,12 @@ export interface TechItem {
   name: string;
   /** hex without "#", omit for the brand default colour */
   color?: string;
+  category?: string;
+}
+
+export interface TechProficiencyCategory {
+  title: string;
+  items: TechItem[];
 }
 
 export interface ProjectItem {
@@ -35,6 +41,44 @@ export interface AboutSegment {
   gradient?: "a" | "b";
 }
 
+export interface ResumeExperience {
+  company: string;
+  role: string;
+  location: string;
+  period: string;
+  points: string[];
+}
+
+export interface ResumeProject {
+  title: string;
+  stack: string;
+  description: string;
+  points: string[];
+}
+
+export interface ResumeData {
+  name: string;
+  location: string;
+  phone: string;
+  email: string;
+  linkedin: string;
+  github: string;
+  summary: string;
+  experience: ResumeExperience[];
+  projects: ResumeProject[];
+  education: {
+    institution: string;
+    degree: string;
+    location: string;
+    period: string;
+    coursework: string;
+  };
+  achievements: {
+    title: string;
+    description: string;
+  }[];
+}
+
 export interface Profile {
   name: string;
   firstName: string;
@@ -45,7 +89,9 @@ export interface Profile {
   timezoneLabel: string;
   countryFlag: string;
   email: string;
+  phone: string;
   resumeUrl: string;
+  resume: ResumeData;
   avatar: string;
   about: AboutSegment[];
   socials: SocialLink[];
@@ -90,29 +136,141 @@ export interface Profile {
   vibe: { image?: string; status: string; title: string; rating: number };
   projects: ProjectItem[];
   projectsCount: string;
+  technicalProficiency: TechProficiencyCategory[];
   tech: TechItem[];
-  aiChat: { ring: string; intro: string; placeholder: string };
+  aiChat: {
+    name: string;
+    ring: string;
+    intro: string;
+    placeholder: string;
+    suggestedPrompts: string[];
+  };
 }
 
 export const profile: Profile = {
   name: "Shashvat Seth",
   firstName: "SHASHVAT",
   role: "Software Developer & AI Engineer",
-  location: "India",
-  locationShort: "India",
+  location: "Pune, India",
+  locationShort: "Pune, India",
   timezone: "Asia/Kolkata",
   timezoneLabel: "GMT +5:30",
   countryFlag: "🇮🇳",
-  email: "shashvat.seth@vigorus.ai",
-  resumeUrl: "/resume.pdf", // TODO: drop your resume at public/resume.pdf
-  avatar: "/hero.png", // pixel-art character, background removed from hero-source.jpg
+  email: "sethshashvat18@gmail.com",
+  phone: "+91 9532914996",
+  resumeUrl: "/resume.pdf",
+  resume: {
+    name: "SHASHVAT SETH",
+    location: "Pune, India",
+    phone: "+91 9532914996",
+    email: "sethshashvat18@gmail.com",
+    linkedin: "https://www.linkedin.com/in/shashvat-seth",
+    github: "https://github.com/ShxshvxtSxth",
+    summary:
+      "Software Developer with practical experience in full-stack web development, scalable frontend architectures, AI-assisted workflows, and modern software systems. Proven track record of delivering enterprise-grade healthcare platforms with Next.js 15, React 19, and LLM integrations, reducing manual data entry by 60% and API overhead by 40%.",
+    experience: [
+      {
+        company: "Vigorus.AI",
+        role: "Software Developer",
+        location: "Pune, India",
+        period: "Dec 2025 – Present",
+        points: [
+          "Architected enterprise Next.js 15 and React 19 EMR platform (Chikitsa v2), orchestrating patient clinical pathways, billing automation, and inventory control.",
+          "Integrated Generative AI and LLM APIs for intelligent medical record interpretation, automated symptom summaries, and predictive clinical inputs.",
+          "Engineered foundation for agentic AI workflows, empowering autonomous task execution, adaptive patient questionnaires, and context-aware clinical decision support.",
+          "Built a dynamic drag-and-drop form builder using React Hook Form, Zod, and @dnd-kit, slashing clinical form configuration turnaround from several days to under 15 minutes. [< 15 mins]",
+        ],
+      },
+      {
+        company: "Agnirva",
+        role: "AI Internship Program",
+        location: "Remote / Hybrid",
+        period: "May 2025 – July 2025",
+        points: [
+          "Developed machine learning pipelines and exploratory data analysis routines utilizing Python, Scikit-learn, Pandas, and NumPy.",
+          "Researched and trained neural network architectures using PyTorch and TensorFlow for pattern recognition tasks.",
+        ],
+      },
+    ],
+    projects: [
+      {
+        title: "Doctor Appointment & Telehealth Platform",
+        stack: "Next.js, Tailwind CSS, Prisma, PostgreSQL, NeonDB, Clerk, Vonage, Shadcn/UI",
+        description:
+          "A production-grade full-stack healthcare platform enabling seamless patient-doctor discovery, automated scheduling, secure card payments, and encrypted real-time video consultations.",
+        points: [
+          "Doctor verification & credentialing onboarding workflow with administrative review dashboard",
+          "Automated calendar booking and appointment management synced with secure payment gateway",
+          "Encrypted WebRTC real-time video consultations powered by Vonage Video API",
+        ],
+      },
+      {
+        title: "AI-Powered EMR & Hospital Management (Chikitsa v2)",
+        stack: "Next.js 15, React 19, LLM APIs, Zustand, TanStack Query, IndexedDB, TanStack Table, Zod",
+        description:
+          "An enterprise electronic medical record (EMR) system tailored for hospitals, featuring offline-first reliability, AI-assisted diagnosis documentation, and automated billing.",
+        points: [
+          "Intelligent LLM clinical assistant extracting structured vitals and diagnoses from unstructured notes",
+          "Offline-first sync engine with IndexedDB local caching and optimistic TanStack Table mutations",
+          "Drag-and-drop dynamic medical form builder slashing clinical deployment to <15 mins",
+        ],
+      },
+      {
+        title: "Interactive 3D Developer Portfolio",
+        stack: "React.js, Tailwind CSS, Vite, Three.js, EmailJS, Motion",
+        description:
+          "An immersive developer portfolio featuring interactive 3D WebGL scenes, physics-based canvas effects, smooth route transitions, and an automated EmailJS contact gateway.",
+        points: [
+          "Custom 3D canvas viewport rendering interactive geometries and lighting rigs",
+          "Responsive Bento Grid architectural design with zero-layout-shift micro-interactions",
+          "Direct automated inquiry pipeline via EmailJS API integration",
+        ],
+      },
+    ],
+    education: {
+      institution: "Jaypee University of Engineering and Technology (JUET)",
+      degree: "B.Tech in Computer Science and Engineering — Undergraduate",
+      location: "Guna, Madhya Pradesh",
+      period: "2022 – 2026",
+      coursework:
+        "Data Structures & Algorithms, Operating Systems, Object-Oriented Programming (OOP), Database Management Systems (DBMS), Software Engineering",
+    },
+    achievements: [
+      {
+        title: "LeetCode 100+ Problem Solver",
+        description:
+          "Solved 100+ Data Structures & Algorithms challenges across Trees, Dynamic Programming, Graphs, and Arrays with consistent algorithmic efficiency.",
+      },
+      {
+        title: "IIT Kanpur AI/ML Certification",
+        description:
+          "Successfully completed intensive advanced coursework on Python for Artificial Intelligence, Machine Learning and Deep Learning.",
+      },
+      {
+        title: "Academic Distinction (95% CBSE XII)",
+        description:
+          "Secured 95% in CBSE Class XII Board Examinations with academic excellence in Mathematics and Computer Science.",
+      },
+      {
+        title: "Mr. Fascino Awardee (JUET)",
+        description:
+          "Awarded the Mr. Fascino title during freshman year in recognition of exceptional communication skills, personality, and active university presence.",
+      },
+      {
+        title: "Sponsorship Team Executive (D'EQUINOX Cultural Fest)",
+        description:
+          "Spearheaded outreach, corporate pitches, and negotiations with regional and national brand sponsors, raising significant funding for the premiere cultural festival.",
+      },
+    ],
+  },
+  avatar: "/hero.png", // character cutout
 
   about: [
     { text: "I am a " },
-    { text: "software developer", gradient: "a" },
-    { text: " who builds scalable full-stack systems and ships " },
-    { text: "AI/ML agents", gradient: "b" },
-    { text: " that solve real clinical problems." },
+    { text: "Software Developer", gradient: "a" },
+    { text: " crafting scalable full-stack systems and shipping " },
+    { text: " intelligent AI agents", gradient: "b" },
+    { text: " that solve critical real-life challenges." },
   ],
 
   socials: [
@@ -120,9 +278,6 @@ export const profile: Profile = {
     { id: "github", label: "GitHub", href: "https://github.com/ShxshvxtSxth" },
     { id: "leetcode", label: "LeetCode", href: "https://leetcode.com/u/ShxshvxtSxth/" },
     { id: "mail", label: "Email", href: "mailto:sethshashvat18@gmail.com" },
-    { id: "x", label: "X", href: "https://x.com/" }, // TODO
-    { id: "instagram", label: "Instagram", href: "https://instagram.com/" }, // TODO
-    { id: "discord", label: "Discord", href: "https://discord.com/" }, // TODO
   ],
 
   leetcode: {
@@ -164,7 +319,7 @@ export const profile: Profile = {
   },
 
   currentRole: {
-    prefix: "software developer @",
+    prefix: "Software Developer @",
     org: "VIGORUS.AI",
     url: "https://vigorus.ai",
   },
@@ -175,10 +330,10 @@ export const profile: Profile = {
     more: "16+",
     testimonial: {
       quote:
-        "Shashvat shipped the EMR integration ahead of schedule and cut our clinical dashboard load times by 40%. He owns problems end to end.",
-      author: "Product Lead",
-      role: "Vigorus.AI",
-    }, // TODO: replace with a real quote
+        "Shashvat architected our EMR v2 clinical pathways and LLM interpretation ahead of schedule, slashing clinical form turnaround to under 15 minutes. Exceptional full-stack ownership.",
+      author: "Product & Clinical Lead",
+      role: "Vigorus.AI (Healthcare Platform)",
+    },
   },
 
   trophy: {
@@ -188,7 +343,7 @@ export const profile: Profile = {
 
   education: {
     degree: "Bachelor of Technology",
-    field: "Computer Engineering", // TODO: verify the branch
+    field: "Computer Science & Engineering",
     institution: "Jaypee University of Engineering & Technology",
     sticker: "🎓",
   },
@@ -197,7 +352,7 @@ export const profile: Profile = {
     track: "God's Plan",
     artist: "Drake",
     url: "https://open.spotify.com/track/6DCZcSspjsKoFjzjrWoCdn",
-    cover: "linear-gradient(135deg, #1f2937, #4b5563 45%, #111827)",
+    cover: "/gods-plan.jpg",
     // played in-page by the card's play button; the album tile still links out
     audio: "/audio/gods-plan.mp3",
   },
@@ -212,48 +367,189 @@ export const profile: Profile = {
   },
 
   projects: [
+    { title: "Telehealth Platform", gradient: "linear-gradient(135deg,#0ea5e9,#2563eb)" },
     { title: "Chikitsa EMR v2", gradient: "linear-gradient(135deg,#38bdf8,#6366f1)" },
+    { title: "3D Developer Portfolio", gradient: "linear-gradient(135deg,#ec4899,#8b5cf6)" },
+    { title: "Plant Rescue AI", gradient: "linear-gradient(135deg,#22c55e,#15803d)" },
     { title: "HIMS Queue Scheduler", gradient: "linear-gradient(135deg,#34d399,#0f766e)" },
     { title: "Clinical NLP Agent", gradient: "linear-gradient(135deg,#e879f9,#7c3aed)" },
-    { title: "Project 04", gradient: "linear-gradient(135deg,#fbbf24,#ea580c)" },
-    { title: "Project 05", gradient: "linear-gradient(135deg,#fb7185,#be123c)" },
-    { title: "Project 06", gradient: "linear-gradient(135deg,#22d3ee,#2563eb)" },
-    { title: "Project 07", gradient: "linear-gradient(135deg,#a3e635,#15803d)" },
-    { title: "Project 08", gradient: "linear-gradient(135deg,#a78bfa,#4338ca)" },
-    { title: "Project 09", gradient: "linear-gradient(135deg,#94a3b8,#1e293b)" },
-    { title: "Project 10", gradient: "linear-gradient(135deg,#f87171,#9f1239)" },
-  ], // TODO: replace placeholders + add /public/projects screenshots
+    { title: "Nag Task Engine", gradient: "linear-gradient(135deg,#6366f1,#a855f7)" },
+    { title: "Doctor Onboarding", gradient: "linear-gradient(135deg,#f59e0b,#ef4444)" },
+    { title: "Clinical Vitals LLM", gradient: "linear-gradient(135deg,#06b6d4,#3b82f6)" },
+    { title: "Smart Scheduling API", gradient: "linear-gradient(135deg,#84cc16,#10b981)" },
+  ],
 
   projectsCount: "10+",
 
+  technicalProficiency: [
+    {
+      title: "Frontend & UI",
+      items: [
+        { slug: "react", name: "React 19", color: "61dafb", category: "Frontend & UI" },
+        { slug: "nextdotjs", name: "Next.js 15", color: "000000", category: "Frontend & UI" },
+        { slug: "typescript", name: "TypeScript", color: "3178c6", category: "Frontend & UI" },
+        { slug: "tailwindcss", name: "Tailwind CSS", color: "06b6d4", category: "Frontend & UI" },
+        { slug: "shadcnui", name: "Shadcn/UI", color: "000000", category: "Frontend & UI" },
+        { slug: "threedotjs", name: "Three.js", color: "000000", category: "Frontend & UI" },
+        { slug: "html5", name: "HTML5 / CSS3", color: "e34f26", category: "Frontend & UI" },
+      ],
+    },
+    {
+      title: "State, Data & Forms",
+      items: [
+        { slug: "zustand", name: "Zustand", color: "443e38", category: "State, Data & Forms" },
+        { slug: "reactquery", name: "TanStack Query", color: "ff4154", category: "State, Data & Forms" },
+        { slug: "tanstacktable", name: "TanStack Table", color: "ff4154", category: "State, Data & Forms" },
+        { slug: "indexeddb", name: "IndexedDB", color: "3178c6", category: "State, Data & Forms" },
+        { slug: "reacthookform", name: "React Hook Form", color: "ec5990", category: "State, Data & Forms" },
+        { slug: "zod", name: "Zod", color: "3e67b1", category: "State, Data & Forms" },
+        { slug: "dndkit", name: "@dnd-kit", color: "6366f1", category: "State, Data & Forms" },
+      ],
+    },
+    {
+      title: "Backend & Databases",
+      items: [
+        { slug: "nodedotjs", name: "Node.js", color: "5fa04e", category: "Backend & Databases" },
+        { slug: "express", name: "Express.js", color: "000000", category: "Backend & Databases" },
+        { slug: "fastapi", name: "FastAPI", color: "009688", category: "Backend & Databases" },
+        { slug: "prisma", name: "Prisma ORM", color: "2d3748", category: "Backend & Databases" },
+        { slug: "postgresql", name: "PostgreSQL", color: "4169e1", category: "Backend & Databases" },
+        { slug: "neon", name: "NeonDB", color: "00e599", category: "Backend & Databases" },
+        { slug: "mongodb", name: "MongoDB", color: "47a248", category: "Backend & Databases" },
+        { slug: "restapi", name: "REST APIs", color: "0284c7", category: "Backend & Databases" },
+      ],
+    },
+    {
+      title: "AI / ML & Agentic Systems",
+      items: [
+        { slug: "llms", name: "LLM APIs & Prompt Eng.", color: "f59e0b", category: "AI / ML & Agentic Systems" },
+        { slug: "agentic", name: "Agentic Architectures", color: "8b5cf6", category: "AI / ML & Agentic Systems" },
+        { slug: "rag", name: "RAG", color: "6366f1", category: "AI / ML & Agentic Systems" },
+        { slug: "voice-ai", name: "Voice AI", color: "06b6d4", category: "AI / ML & Agentic Systems" },
+        { slug: "pytorch", name: "PyTorch", color: "ee4c2c", category: "AI / ML & Agentic Systems" },
+        { slug: "tensorflow", name: "TensorFlow", color: "ff6f00", category: "AI / ML & Agentic Systems" },
+        { slug: "scikitlearn", name: "Scikit-learn", color: "f7931e", category: "AI / ML & Agentic Systems" },
+        { slug: "pandas", name: "Pandas", color: "150458", category: "AI / ML & Agentic Systems" },
+        { slug: "numpy", name: "NumPy", color: "013243", category: "AI / ML & Agentic Systems" },
+      ],
+    },
+    {
+      title: "Programming Languages",
+      items: [
+        { slug: "typescript", name: "TypeScript", color: "3178c6", category: "Programming Languages" },
+        { slug: "javascript", name: "JavaScript (ES6+)", color: "f7df1e", category: "Programming Languages" },
+        { slug: "python", name: "Python", color: "3776ab", category: "Programming Languages" },
+        { slug: "cplusplus", name: "C / C++", color: "00599c", category: "Programming Languages" },
+        { slug: "java", name: "Java", color: "437291", category: "Programming Languages" },
+        { slug: "rust", name: "Rust", color: "000000", category: "Programming Languages" },
+        { slug: "kotlin", name: "Kotlin", color: "7f52ff", category: "Programming Languages" },
+      ],
+    },
+    {
+      title: "Cloud, DevOps & Containers",
+      items: [
+        { slug: "docker", name: "Docker", color: "2496ed", category: "Cloud, DevOps & Containers" },
+        { slug: "azure", name: "Microsoft Azure", color: "0078d4", category: "Cloud, DevOps & Containers" },
+        { slug: "aws", name: "Amazon Web Services (AWS)", color: "ff9900", category: "Cloud, DevOps & Containers" },
+        { slug: "googlecloud", name: "Google Cloud (GCP)", color: "4285f4", category: "Cloud, DevOps & Containers" },
+        { slug: "kubernetes", name: "Kubernetes", color: "326ce5", category: "Cloud, DevOps & Containers" },
+        { slug: "linux", name: "Linux", color: "fcc624", category: "Cloud, DevOps & Containers" },
+        { slug: "nginx", name: "Nginx", color: "009639", category: "Cloud, DevOps & Containers" },
+        { slug: "cicd", name: "CI / CD (GitHub Actions)", color: "2088ff", category: "Cloud, DevOps & Containers" },
+        { slug: "vercel", name: "Vercel", color: "000000", category: "Cloud, DevOps & Containers" },
+        { slug: "redis", name: "Redis", color: "dc382d", category: "Cloud, DevOps & Containers" },
+      ],
+    },
+    {
+      title: "Auth, Tools & Infrastructure",
+      items: [
+        { slug: "postman", name: "Postman", color: "ff6c37", category: "Auth, Tools & Infrastructure" },
+        { slug: "clerk", name: "Clerk Auth", color: "6c47ff", category: "Auth, Tools & Infrastructure" },
+        { slug: "jwt", name: "JWT", color: "000000", category: "Auth, Tools & Infrastructure" },
+        { slug: "git", name: "Git", color: "f05032", category: "Auth, Tools & Infrastructure" },
+        { slug: "github", name: "GitHub", color: "0f172a", category: "Auth, Tools & Infrastructure" },
+        { slug: "vite", name: "Vite", color: "646cff", category: "Auth, Tools & Infrastructure" },
+        { slug: "figma", name: "Figma", color: "f24e1e", category: "Auth, Tools & Infrastructure" },
+        { slug: "bash", name: "Bash / Shell", color: "4eaa25", category: "Auth, Tools & Infrastructure" },
+        { slug: "vonage", name: "Vonage Video", color: "000000", category: "Auth, Tools & Infrastructure" },
+        { slug: "i18n", name: "i18n", color: "26a69a", category: "Auth, Tools & Infrastructure" },
+        { slug: "emailjs", name: "EmailJS", color: "f7df1e", category: "Auth, Tools & Infrastructure" },
+        { slug: "android", name: "Android", color: "3ddc84", category: "Auth, Tools & Infrastructure" },
+      ],
+    },
+  ],
+
   tech: [
-    { slug: "python", name: "Python" },
-    { slug: "typescript", name: "TypeScript" },
-    { slug: "react", name: "React" },
-    { slug: "nextdotjs", name: "Next.js", color: "0f172a" },
-    { slug: "nodedotjs", name: "Node.js" },
-    { slug: "express", name: "Express", color: "0f172a" },
-    { slug: "fastapi", name: "FastAPI" },
-    { slug: "postgresql", name: "PostgreSQL" },
-    { slug: "mongodb", name: "MongoDB" },
-    { slug: "redis", name: "Redis" },
-    { slug: "docker", name: "Docker" },
-    { slug: "tailwindcss", name: "Tailwind CSS" },
-    { slug: "html5", name: "HTML5" },
+    { slug: "react", name: "React 19", color: "61dafb" },
+    { slug: "nextdotjs", name: "Next.js 15", color: "0f172a" },
+    { slug: "typescript", name: "TypeScript", color: "3178c6" },
+    { slug: "python", name: "Python", color: "3776ab" },
+    { slug: "fastapi", name: "FastAPI", color: "009688" },
+    { slug: "nodedotjs", name: "Node.js", color: "5fa04e" },
+    { slug: "docker", name: "Docker", color: "2496ed" },
+    { slug: "azure", name: "Microsoft Azure", color: "0078d4" },
+    { slug: "aws", name: "AWS", color: "ff9900" },
+    { slug: "kubernetes", name: "Kubernetes", color: "326ce5" },
+    { slug: "tailwindcss", name: "Tailwind CSS", color: "06b6d4" },
+    { slug: "shadcnui", name: "Shadcn/UI", color: "0f172a" },
     { slug: "threedotjs", name: "Three.js", color: "0f172a" },
-    { slug: "pytorch", name: "PyTorch" },
-    { slug: "langchain", name: "LangChain", color: "0f172a" },
-    { slug: "git", name: "Git" },
-    { slug: "github", name: "GitHub", color: "0f172a" },
+    { slug: "zustand", name: "Zustand", color: "443e38" },
+    { slug: "reactquery", name: "TanStack Query", color: "ff4154" },
+    { slug: "tanstacktable", name: "TanStack Table", color: "ff4154" },
+    { slug: "indexeddb", name: "IndexedDB", color: "3178c6" },
+    { slug: "reacthookform", name: "React Hook Form", color: "ec5990" },
+    { slug: "zod", name: "Zod", color: "3e67b1" },
+    { slug: "dndkit", name: "@dnd-kit", color: "6366f1" },
+    { slug: "express", name: "Express.js", color: "0f172a" },
+    { slug: "prisma", name: "Prisma ORM", color: "2d3748" },
+    { slug: "postgresql", name: "PostgreSQL", color: "4169e1" },
+    { slug: "neon", name: "NeonDB", color: "00e599" },
+    { slug: "mongodb", name: "MongoDB", color: "47a248" },
+    { slug: "restapi", name: "REST APIs", color: "0284c7" },
+    { slug: "llms", name: "LLMs & Prompt Eng.", color: "f59e0b" },
+    { slug: "agentic", name: "Agentic Architectures", color: "8b5cf6" },
+    { slug: "rag", name: "RAG", color: "6366f1" },
+    { slug: "voice-ai", name: "Voice AI", color: "06b6d4" },
+    { slug: "pytorch", name: "PyTorch", color: "ee4c2c" },
+    { slug: "tensorflow", name: "TensorFlow", color: "ff6f00" },
+    { slug: "scikitlearn", name: "Scikit-learn", color: "f7931e" },
+    { slug: "pandas", name: "Pandas", color: "150458" },
+    { slug: "numpy", name: "NumPy", color: "013243" },
+    { slug: "linux", name: "Linux", color: "fcc624" },
+    { slug: "postman", name: "Postman", color: "ff6c37" },
+    { slug: "nginx", name: "Nginx", color: "009639" },
+    { slug: "redis", name: "Redis", color: "dc382d" },
     { slug: "vercel", name: "Vercel", color: "0f172a" },
-    { slug: "figma", name: "Figma" },
-    { slug: "prisma", name: "Prisma", color: "0f172a" },
+    { slug: "javascript", name: "JavaScript (ES6+)", color: "f7df1e" },
+    { slug: "cplusplus", name: "C / C++", color: "00599c" },
+    { slug: "java", name: "Java", color: "437291" },
+    { slug: "rust", name: "Rust", color: "0f172a" },
+    { slug: "kotlin", name: "Kotlin", color: "7f52ff" },
+    { slug: "android", name: "Android", color: "3ddc84" },
+    { slug: "clerk", name: "Clerk Auth", color: "6c47ff" },
+    { slug: "jwt", name: "JWT", color: "0f172a" },
+    { slug: "git", name: "Git", color: "f05032" },
+    { slug: "github", name: "GitHub", color: "0f172a" },
+    { slug: "vite", name: "Vite", color: "646cff" },
+    { slug: "figma", name: "Figma", color: "f24e1e" },
+    { slug: "vonage", name: "Vonage Video", color: "0f172a" },
+    { slug: "i18n", name: "i18n", color: "26a69a" },
+    { slug: "emailjs", name: "EmailJS", color: "f7df1e" },
   ],
 
   aiChat: {
-    ring: "talk to my ai • he knows about me • get an instant reply • lets have a chat • ",
-    intro: "Hey! I'm Shashvat's assistant. Ask me about his stack, experience, projects or how to reach him.",
-    placeholder: "Ask me anything about Shashvat…",
+    name: "Portfolio Assistant",
+    ring: "chat with assistant • shashvat's portfolio assistant • ask anything • instant answers • ",
+    intro: "Ask me anything about Shashvat's skills, experience, projects, or background.",
+    placeholder: "Ask about Shashvat's skills, projects, experience…",
+    suggestedPrompts: [
+      "Who is Shashvat?",
+      "What does Shashvat know?",
+      "What has he built?",
+      "What is Nag?",
+      "What is Plant Rescue AI?",
+      "Can I contact Shashvat?",
+    ],
   },
 };
 

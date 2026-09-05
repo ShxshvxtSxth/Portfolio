@@ -17,8 +17,8 @@ const CONFETTI = Array.from({ length: 18 }, (_, i) => {
   const angle = (-160 + i * 9) * (Math.PI / 180);
   const distance = 70 + ((i * 37) % 60);
   return {
-    tx: `${Math.cos(angle) * distance}px`,
-    ty: `${Math.sin(angle) * distance}px`,
+    tx: `${Math.round(Math.cos(angle) * distance)}px`,
+    ty: `${Math.round(Math.sin(angle) * distance)}px`,
     delay: `${(i % 6) * 40}ms`,
     color: ["#f59e0b", "#e11d48", "#8b5cf6", "#22c55e", "#38bdf8", "#fbbf24"][i % 6],
     rotate: `${(i * 47) % 360}deg`,

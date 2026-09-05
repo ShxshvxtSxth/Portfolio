@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { localAnswer, systemPrompt } from "@/lib/answers";
 
-export const runtime = "edge";
-
 /**
  * Chat endpoint for the AI tile.
  *
@@ -22,7 +20,7 @@ export const runtime = "edge";
 const MAX_MESSAGE = 500;
 const MAX_HISTORY = 6;
 
-const GOOGLE_MODEL = process.env.GOOGLE_MODEL || "gemini-2.0-flash";
+const GOOGLE_MODEL = process.env.GOOGLE_MODEL || "gemini-flash-latest";
 const GOOGLE_FALLBACK_MODEL = "gemini-2.5-flash";
 const GROQ_MODEL = process.env.GROQ_MODEL || "llama-3.3-70b-versatile";
 
@@ -45,7 +43,11 @@ async function askGoogle(key: string, model: string, message: string, history: T
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: systemPrompt() }] },
-        generationConfig: { maxOutputTokens: 220, temperature: 0.4 },
+        generationConfig: {
+          maxOutputTokens: 1024,
+          temperature: 0.6,
+          thinkingConfig: { thinkingBudget: 0 },
+        },
         contents: [
           ...history.map((t) => ({
             role: t.role === "assistant" ? "model" : "user",
@@ -63,11 +65,23 @@ async function askGoogle(key: string, model: string, message: string, history: T
   }
 
   const data = await res.json();
-  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (typeof text !== "string" || !text.trim()) {
+  const rawParts = data?.candidates?.[0]?.content?.parts;
+  let text = "";
+  if (Array.isArray(rawParts)) {
+    text = rawParts
+      .filter((p: { text?: string; thought?: boolean }) => !p.thought && typeof p.text === "string")
+      .map((p: { text: string }) => p.text)
+      .join("\n")
+      .trim();
+    if (!text && rawParts[0]?.text) {
+      text = rawParts[0].text.trim();
+    }
+  }
+
+  if (!text) {
     throw new ProviderError("google", 200, `no text in response: ${JSON.stringify(data).slice(0, 200)}`);
   }
-  return text.trim();
+  return text;
 }
 
 async function askGroq(key: string, message: string, history: Turn[]): Promise<string> {
@@ -96,10 +110,10 @@ async function askGroq(key: string, message: string, history: Turn[]): Promise<s
 /** which provider this deployment will actually use */
 function resolveProvider() {
   const forced = process.env.CHAT_PROVIDER?.toLowerCase();
-  const google = process.env.GOOGLE_API_KEY;
+  const google = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
   const groq = process.env.GROQ_API_KEY;
 
-  if (forced === "google") return google ? { name: "google" as const, key: google } : null;
+  if (forced === "google" || forced === "gemini") return google ? { name: "google" as const, key: google } : null;
   if (forced === "groq") return groq ? { name: "groq" as const, key: groq } : null;
   if (google) return { name: "google" as const, key: google };
   if (groq) return { name: "groq" as const, key: groq };
